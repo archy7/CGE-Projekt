@@ -38,7 +38,8 @@ class ofApp : public ofBaseApp{
 		//ofBoxPrimitive box;
 		//ofPlanePrimitive ground;
 
-
+		ofLight playerLight;
+		
 		//CAMERA
 		ofCamera camera;
 		ofVec3f cameraFocus;
