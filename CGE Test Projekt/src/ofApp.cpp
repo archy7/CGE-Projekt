@@ -21,7 +21,8 @@ void ofApp::setup(){
 	//"SETTINGS"
 	ofSetFrameRate(60);
 	ofSetVerticalSync(false);
-	ofSetBackgroundColor(0, 0, 0);
+	ofBackground(0);
+	ofSetGlobalAmbientColor(ofColor(0, 0, 0));
 	ofEnableDepthTest();
 	ofDisableArbTex();
 	//ofDisableAlphaBlending().
@@ -76,10 +77,10 @@ void ofApp::setup(){
 	
 	playerBall.setRadius(playerSize / 2);
 
-	
-	
-
-
+	playerLight.setPosition(playerBall.getPosition());
+	playerLight.setParent(playerBall);
+	playerLight.setDiffuseColor(ofColor(255.0f, 255.0f, 255.0f));
+	playerLight.setPointLight();
 
 	//playerBoundingBox.setPosition(playerPosition); // + ofVec3f(0, 0, -playerSize / 2)
 	//playerBoundingBox.setPosition(0,0,0); // + ofVec3f(0, 0, -playerSize / 2)
@@ -119,6 +120,9 @@ void ofApp::draw(){
 
 	ofColor wireframe_color(255, 0, 0); //red
 
+	//playerLight.disable();
+	//playerLight.setPosition(playerBall.getPosition());
+	//playerLight.enable();
 	camera.begin();
 
 	this->tileGrid->draw();
@@ -257,7 +261,7 @@ void ofApp::drawFPS() {
 
 	if (this->fpsfont.isLoaded() == false) {
 		//if (this->fpsfont.load(".\\resource\\fonts\\IMMORTAL.ttf", 10) == false) {
-		if (this->fpsfont.load("C:\\Users\\Andreas\\Documents\\Visual Studio 2015\\Projects\\CGE Test Projekt\\CGE Test Projekt\\bin\\resource\\fonts\\IMMORTAL.ttf", 10) == false) {
+		if (this->fpsfont.load("..\\resource\\fonts\\Immortal.ttf", 10) == false) {
 			return;
 		}
 	}
