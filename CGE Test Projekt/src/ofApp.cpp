@@ -120,9 +120,9 @@ void ofApp::draw(){
 
 	ofColor wireframe_color(255, 0, 0); //red
 
-	//playerLight.disable();
-	//playerLight.setPosition(playerBall.getPosition());
-	//playerLight.enable();
+	playerLight.disable();
+	playerLight.setPosition(playerBall.getPosition());
+	playerLight.enable();
 	camera.begin();
 
 	this->tileGrid->draw();

@@ -1,50 +1,12 @@
-﻿  main.cpp
-  ofApp.cpp
-  playerBallGroup.cpp
-  tile.cpp
-  tileGrid.cpp
-  wall.cpp
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(320): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(325): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(320): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\tileGrid.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(325): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\tileGrid.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(320): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\wall.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(325): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\wall.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(969): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\tileGrid.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(970): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\tileGrid.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(971): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\tileGrid.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(972): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\tileGrid.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(969): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(969): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\wall.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(970): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(970): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\wall.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(971): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(971): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\wall.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(972): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(972): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\wall.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(320): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(325): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(320): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\playerBallGroup.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(325): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\playerBallGroup.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(969): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(970): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(971): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(972): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(969): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\playerBallGroup.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(970): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\playerBallGroup.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(971): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\playerBallGroup.cpp)
-C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(972): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\playerBallGroup.cpp)
-  LINK : bin\CGE Test Projekt_debug.exe not found or not built by the last incremental link; performing full link
-     Creating library bin\CGE Test Projekt_debug.lib and object bin\CGE Test Projekt_debug.exp
+﻿  ofApp.cpp
+C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(320): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(325): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(969): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(970): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(971): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\libs\openFrameworks\math\ofMatrix4x4.h(972): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   CGE Test Projekt.vcxproj -> C:\Users\MK\Documents\GitHub\CGE-Projekt\CGE Test Projekt\bin\CGE Test Projekt_debug.exe
   
   	                   9	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\
   	  *EXTRA Datei 		 1266176	C:\Users\MK\Documents\GitHub\CGE-Projekt\CGE Test Projekt\bin\fmodex.dll
   	  *EXTRA Datei 		 1312768	C:\Users\MK\Documents\GitHub\CGE-Projekt\CGE Test Projekt\bin\fmodexL.dll
-  	    Älter     		 4171776	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\assimp.dll
-  	    Älter     		 6402560	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\FreeImage.dll
-  	    Älter     		  734720	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\freetype.dll
-  	    Älter     		  289792	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\glut32.dll
-  	    Älter     		 2208256	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\libeay32.dll
-  	    Älter     		  458240	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\ssleay32.dll
-  	    Älter     		   81408	C:\Users\MK\Documents\GitHub\CGE-Projekt\libs\of_v0.9.3_vs_release\export\vs\x64\Zlib.dll
