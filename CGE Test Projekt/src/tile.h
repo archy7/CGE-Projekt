@@ -6,6 +6,7 @@ private:
 	int gridPosY = -1;
 	float tilesize = -1;
 	bool walled = false;
+	int lightStatus = 0;
 
 	float positionX = -1;
 	float positionY = -1;
@@ -17,6 +18,8 @@ public:
 	void positionAt(int posX, int posY);
 	bool getWalled();
 	void setWalled(bool wall);
+	int getLightStatus();
+	void setLightStatus(int status);
 	int getGridPosX();
 	int getGridPosY();
 	float getCoordinateX();

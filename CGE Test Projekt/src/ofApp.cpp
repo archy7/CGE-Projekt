@@ -128,6 +128,9 @@ void ofApp::draw(){
 	ofColor wireframe_color(255, 0, 0); //red
 
 	ofVec3f playerPos = playerBall.getPosition();
+
+	//std::cout << "x:" << playerPos.x << "-y:" << playerPos.y << "-z:" << playerPos.z << '\n';
+
 	playerPos.y = playerSize*4;
 	playerLight.setPosition(playerPos);
 
@@ -135,7 +138,7 @@ void ofApp::draw(){
 
 	//in camera context
 	playerLight.enable();
-	playerLight.draw();
+	//playerLight.draw();
 
 	this->tileGrid->draw();
 
@@ -159,11 +162,17 @@ void ofApp::keyPressed(int key){
 	case 'w': {
 		//move forward == -z
 		ofVec3f ballPos = playerBall.getPosition();
-		if (this->tileGrid->notBlocked(ballPos, playerSize, 0, ballSpeed, tilesize)) {
-			ballPos.z = ballPos.z - 1 * ballSpeed;
+		ballPos.z = ballPos.z - 1 * ballSpeed;
+
+		ofVec3f wallPos = ballPos;
+		wallPos.z -= playerSize / 2;
+
+		tile* t = this->tileGrid->getTileAtVector(wallPos);
+		if (t!=NULL && !t->getWalled()) {
+			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+			
 			playerBall.setPosition(ballPos);
 			cameraFocus = this->getCameraFocus();
-			std::cout << ballPos.z << "\n";
 		}
 		//playerBall.rotate()
 		break;
@@ -172,8 +181,16 @@ void ofApp::keyPressed(int key){
 		//move left == -x
 		ofVec3f ballPos = playerBall.getPosition();
 		ballPos.x = ballPos.x - 1 * ballSpeed;
-		playerBall.setPosition(ballPos);
-		cameraFocus = this->getCameraFocus();
+		ofVec3f wallPos = ballPos;
+		wallPos.x -= playerSize / 2;
+
+		tile* t = this->tileGrid->getTileAtVector(wallPos);
+		if (t != NULL && !t->getWalled()) {
+			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+
+			playerBall.setPosition(ballPos);
+			cameraFocus = this->getCameraFocus();
+		}
 		//playerBall.rotate()
 		break;
 	}
@@ -181,8 +198,16 @@ void ofApp::keyPressed(int key){
 		//move back == +z
 		ofVec3f ballPos = playerBall.getPosition();
 		ballPos.z = ballPos.z + 1 * ballSpeed;
-		playerBall.setPosition(ballPos);
-		cameraFocus = this->getCameraFocus();
+		ofVec3f wallPos = ballPos;
+		wallPos.z += playerSize / 2;
+
+		tile* t = this->tileGrid->getTileAtVector(wallPos);
+		if (t != NULL && !t->getWalled()) {
+			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+
+			playerBall.setPosition(ballPos);
+			cameraFocus = this->getCameraFocus();
+		}
 		//playerBall.rotate()
 		break;
 	}
@@ -190,8 +215,16 @@ void ofApp::keyPressed(int key){
 		//move right == +x
 		ofVec3f ballPos = playerBall.getPosition();
 		ballPos.x = ballPos.x + 1 * ballSpeed;
-		playerBall.setPosition(ballPos);
-		cameraFocus = this->getCameraFocus();
+		ofVec3f wallPos = ballPos;
+		wallPos.x += playerSize / 2;
+
+		tile* t = this->tileGrid->getTileAtVector(wallPos);
+		if (t != NULL && !t->getWalled()) {
+			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+
+			playerBall.setPosition(ballPos);
+			cameraFocus = this->getCameraFocus();
+		}
 		//playerBall.rotate()
 		break;
 	}

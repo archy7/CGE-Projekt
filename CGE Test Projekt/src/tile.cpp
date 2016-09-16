@@ -30,6 +30,14 @@ void tile::setWalled(bool wall){
 	this->walled = wall;
 }
 
+int tile::getLightStatus() {
+	return this->lightStatus;
+}
+
+void tile::setLightStatus(int status) {
+	this->lightStatus = status;
+}
+
 int tile::getGridPosX()
 {
 	return this->gridPosX;

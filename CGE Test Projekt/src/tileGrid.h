@@ -43,6 +43,7 @@ public:
 	void setWallHeight(float wallHeight);
 	float getWallHeight();
 
+	tile* getTileAtVector(ofVec3f position);
 	bool notBlocked(ofVec3f playerPos, float playerSize, int direction, int step, float tilesize);
 
 	void draw();

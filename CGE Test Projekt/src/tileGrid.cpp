@@ -323,8 +323,20 @@ float tileGrid::getWallHeight() {
 	return this->wallHeight;
 }
 
+tile* tileGrid::getTileAtVector(ofVec3f position){
+	int x = floor(position.x/tilesize);
+	int y = floor(position.z*-1 / tilesize);
+
+	std::cout << x << '-' << y <<'\n';
+
+	if (x <= gridSizeX && y <= gridSizeY)
+		return this->getTileAt(x, y);
+	else
+		return NULL;
+}
+
 bool tileGrid::notBlocked(ofVec3f playerPos, float playerSize, int direction, int step, float tilesize) {
-	float halfsize = playerSize / 2;
+	/*float halfsize = playerSize / 2;
 	float halftile = tilesize / 2;
 	//x-Richtung
 	for (auto &wall: this->wallVec){
@@ -346,7 +358,7 @@ bool tileGrid::notBlocked(ofVec3f playerPos, float playerSize, int direction, in
 			case 3:
 				break;
 		}
-	}
+	}*/
 	return true;
 }
 
