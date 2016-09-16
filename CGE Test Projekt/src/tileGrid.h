@@ -43,6 +43,8 @@ public:
 	void setWallHeight(float wallHeight);
 	float getWallHeight();
 
+	bool notBlocked(ofVec3f playerPos, float playerSize, int direction, int step, float tilesize);
+
 	void draw();
 	/*static int cToEuklidX(int posX);
 	static int cToEuklidY(int posY);

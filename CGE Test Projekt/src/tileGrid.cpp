@@ -323,6 +323,33 @@ float tileGrid::getWallHeight() {
 	return this->wallHeight;
 }
 
+bool tileGrid::notBlocked(ofVec3f playerPos, float playerSize, int direction, int step, float tilesize) {
+	float halfsize = playerSize / 2;
+	float halftile = tilesize / 2;
+	//x-Richtung
+	for (auto &wall: this->wallVec){
+		switch (direction) {
+			//w
+			case 0:
+
+			if (wall.getPosition(tilesize).z+halftile + halfsize + step <= playerPos.z && playerPos.z<-90) {
+				return false;
+			}
+			break;
+			//a
+			case 1:
+				break;
+			//s
+			case 2:
+				break;
+			//d
+			case 3:
+				break;
+		}
+	}
+	return true;
+}
+
 void tileGrid::draw(){
 	ofColor white(255, 255, 255); //white
 	//ofColor wall_color(0, 255, 0); //green

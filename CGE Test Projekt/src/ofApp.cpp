@@ -22,9 +22,14 @@ void ofApp::setup(){
 	ofSetFrameRate(60);
 	ofSetVerticalSync(false);
 	ofBackground(0);
-	ofSetGlobalAmbientColor(ofColor(0, 0, 0));
+	ofSetGlobalAmbientColor(ofColor(10.0f, 10.0f, 10.0f));
+	
 	ofEnableDepthTest();
 	ofDisableArbTex();
+
+	ofEnableLighting();
+	glShadeModel(GL_SMOOTH);
+	
 	//ofDisableAlphaBlending().
 
 
@@ -64,12 +69,10 @@ void ofApp::setup(){
 	ground.rotate(90, 1, 0, 0);*/
 
 
-	//cout << "Player starting postion: x:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateX() << " y:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateY() << endl;
+	cout << "Player starting postion: x:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateX() << " y:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateY() << endl;
 
 	float playerStartX = this->tileGrid->getTileAt(1, 1)->getCoordinateX();
 	float playerStartY = this->tileGrid->getTileAt(1, 1)->getCoordinateY();
-	float playerSize = 20;
-
 
 	playerPosition = ofVec3f(playerStartX, playerSize/2, -playerStartY);
 	playerBall.setPosition(playerPosition);
@@ -77,10 +80,14 @@ void ofApp::setup(){
 	
 	playerBall.setRadius(playerSize / 2);
 
-	playerLight.setPosition(playerBall.getPosition());
-	playerLight.setParent(playerBall);
+	playerLight.setPosition(ofVec3f(playerStartX, playerSize*4, -playerStartY));
+	//playerLight.setParent(playerBall);
 	playerLight.setDiffuseColor(ofColor(255.0f, 255.0f, 255.0f));
-	playerLight.setPointLight();
+	playerLight.setSpecularColor(ofColor(255.0f, 255.0f, 255.0f));
+	//playerLight.setPointLight();
+	playerLight.setOrientation(ofVec3f(-90.0, 0.0, 0.0));
+	playerLight.setSpotlight();
+	playerLight.setSpotConcentration(0.5f);
 
 	//playerBoundingBox.setPosition(playerPosition); // + ofVec3f(0, 0, -playerSize / 2)
 	//playerBoundingBox.setPosition(0,0,0); // + ofVec3f(0, 0, -playerSize / 2)
@@ -120,10 +127,15 @@ void ofApp::draw(){
 
 	ofColor wireframe_color(255, 0, 0); //red
 
-	playerLight.disable();
-	playerLight.setPosition(playerBall.getPosition());
-	playerLight.enable();
+	ofVec3f playerPos = playerBall.getPosition();
+	playerPos.y = playerSize*4;
+	playerLight.setPosition(playerPos);
+
 	camera.begin();
+
+	//in camera context
+	playerLight.enable();
+	playerLight.draw();
 
 	this->tileGrid->draw();
 
@@ -134,6 +146,7 @@ void ofApp::draw(){
 	playerBoundingBox.drawWireframe();
 	ofSetColor(ground_color);
 
+	playerLight.disable();
 	camera.end();
 
 	this->drawFPS();
@@ -146,9 +159,12 @@ void ofApp::keyPressed(int key){
 	case 'w': {
 		//move forward == -z
 		ofVec3f ballPos = playerBall.getPosition();
-		ballPos.z = ballPos.z - 1 * ballSpeed;
-		playerBall.setPosition(ballPos);
-		cameraFocus = this->getCameraFocus();
+		if (this->tileGrid->notBlocked(ballPos, playerSize, 0, ballSpeed, tilesize)) {
+			ballPos.z = ballPos.z - 1 * ballSpeed;
+			playerBall.setPosition(ballPos);
+			cameraFocus = this->getCameraFocus();
+			std::cout << ballPos.z << "\n";
+		}
 		//playerBall.rotate()
 		break;
 	}

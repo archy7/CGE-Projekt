@@ -53,6 +53,8 @@ class ofApp : public ofBaseApp{
 		int mousePosY = 0;
 		float camPosX = 0;
 		float camPosY = 0;
+
+		float playerSize = 20;
 		
 		ofVec3f getCameraFocus();
 		void moveCamera();
