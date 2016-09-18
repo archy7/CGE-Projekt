@@ -17,7 +17,7 @@ private:
 	std::vector<wall> wallVec;
 	std::vector<ofBoxPrimitive> visibleWallVec;
 
-	ofPlanePrimitive ground;
+	ofBoxPrimitive ground;
 
 	void allocateMemory();
 	void setupGround();
@@ -36,6 +36,7 @@ public:
 	static tileGrid* setUpGrid(int gridSizeX, int gridSizeY, float tilesize);
 	//tileGrid buildTileGrid(string filename);
 	void buildLab();
+	void addLights();
 	tile* getTileAt(int gridPosX, int gridPosY);
 	void buildWallAt(int startX, int startY, int endX, int endY);
 	bool coordinateOutOfBounds(int gridPosX, int gridPosY);
@@ -44,7 +45,6 @@ public:
 	float getWallHeight();
 
 	tile* getTileAtVector(ofVec3f position);
-	bool notBlocked(ofVec3f playerPos, float playerSize, int direction, int step, float tilesize);
 
 	void draw();
 	/*static int cToEuklidX(int posX);

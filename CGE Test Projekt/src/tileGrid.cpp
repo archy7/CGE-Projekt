@@ -76,7 +76,7 @@ void tileGrid::allocateMemory() {
 			int gridPosX = y;
 			int gridPosY = this->gridSizeX-x-1;
 
-			this->grid[x][y] = new tile(gridPosX, gridPosY, this->tilesize, false);
+			this->grid[x][y] = new tile(gridPosX, gridPosY, this->tilesize, false, 0);
 		}
 	}
 
@@ -92,9 +92,9 @@ void tileGrid::setupGround(){
 	//black magic kind of
 	ofVec3f groundPosition(0,0,0);
 	this->ground.setPosition(groundPosition);
-	this->ground.setHeight(this->gridSizeX * tilesize);
+	this->ground.setHeight(1);
 	this->ground.setWidth(this->gridSizeY * tilesize);
-	this->ground.rotate(90, 1, 0, 0);
+	this->ground.setDepth(this->gridSizeY * tilesize);
 	this->ground.move(this->gridSizeY*this->tilesize / 2, 0, -this->gridSizeX*this->tilesize / 2);
 }
 
@@ -259,6 +259,30 @@ void tileGrid::buildLab(){
 	this->setupWalls();
 }
 
+void tileGrid::addLights() {
+	this->getTileAt(3, 4)->setLightStatus(1);
+	this->getTileAt(3, 3)->setLightStatus(1);
+	this->getTileAt(9, 3)->setLightStatus(1);
+	this->getTileAt(9, 2)->setLightStatus(1);
+	this->getTileAt(9, 1)->setLightStatus(1);
+	this->getTileAt(20, 7)->setLightStatus(1);
+	this->getTileAt(21, 7)->setLightStatus(1);
+	this->getTileAt(20, 8)->setLightStatus(1);
+	this->getTileAt(21, 8)->setLightStatus(1);
+	this->getTileAt(26, 7)->setLightStatus(1);
+	this->getTileAt(27, 7)->setLightStatus(1);
+	this->getTileAt(26, 8)->setLightStatus(1);
+	this->getTileAt(27, 8)->setLightStatus(1);
+	this->getTileAt(35, 7)->setLightStatus(1);
+	this->getTileAt(36, 7)->setLightStatus(1);
+	this->getTileAt(35, 8)->setLightStatus(1);
+	this->getTileAt(36, 8)->setLightStatus(1);
+	this->getTileAt(49, 7)->setLightStatus(1);
+	this->getTileAt(50, 7)->setLightStatus(1);
+	this->getTileAt(49, 8)->setLightStatus(1);
+	this->getTileAt(50, 8)->setLightStatus(1);
+}
+
 tile* tileGrid::getTileAt(int gridPosX, int gridPosY){
 
 	int cCoordinateY = gridPosX;
@@ -327,39 +351,12 @@ tile* tileGrid::getTileAtVector(ofVec3f position){
 	int x = floor(position.x/tilesize);
 	int y = floor(position.z*-1 / tilesize);
 
-	std::cout << x << '-' << y <<'\n';
+	//std::cout << x << '-' << y <<'\n';
 
 	if (x <= gridSizeX && y <= gridSizeY)
 		return this->getTileAt(x, y);
 	else
 		return NULL;
-}
-
-bool tileGrid::notBlocked(ofVec3f playerPos, float playerSize, int direction, int step, float tilesize) {
-	/*float halfsize = playerSize / 2;
-	float halftile = tilesize / 2;
-	//x-Richtung
-	for (auto &wall: this->wallVec){
-		switch (direction) {
-			//w
-			case 0:
-
-			if (wall.getPosition(tilesize).z+halftile + halfsize + step <= playerPos.z && playerPos.z<-90) {
-				return false;
-			}
-			break;
-			//a
-			case 1:
-				break;
-			//s
-			case 2:
-				break;
-			//d
-			case 3:
-				break;
-		}
-	}*/
-	return true;
 }
 
 void tileGrid::draw(){

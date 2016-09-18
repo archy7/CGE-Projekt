@@ -59,6 +59,8 @@ class ofApp : public ofBaseApp{
 		ofVec3f getCameraFocus();
 		void moveCamera();
 		
+		std::vector<ofLight>lights;
+		void spawnLight(tile* cur);
 
 	public:
 		ofApp();

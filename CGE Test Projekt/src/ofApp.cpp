@@ -29,7 +29,6 @@ void ofApp::setup(){
 
 	ofEnableLighting();
 	glShadeModel(GL_SMOOTH);
-	
 	//ofDisableAlphaBlending().
 
 
@@ -60,6 +59,7 @@ void ofApp::setup(){
 	this->tileGrid = tileGrid::setUpGrid(53, 34, 40);
 	this->tileGrid->setWallHeight(50);
 	this->tileGrid->buildLab();
+	this->tileGrid->addLights();
 	this->tileGrid->printGridToConsole();
 
 	
@@ -138,6 +138,9 @@ void ofApp::draw(){
 
 	//in camera context
 	playerLight.enable();
+	for (auto &light:lights) {
+		light.enable();
+	}
 	//playerLight.draw();
 
 	this->tileGrid->draw();
@@ -169,6 +172,7 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t!=NULL && !t->getWalled()) {
+			spawnLight(t);
 			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 			
 			playerBall.setPosition(ballPos);
@@ -186,6 +190,7 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
+			spawnLight(t);
 			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
 			playerBall.setPosition(ballPos);
@@ -203,6 +208,7 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
+			spawnLight(t);
 			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
 			playerBall.setPosition(ballPos);
@@ -220,6 +226,7 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
+			spawnLight(t);
 			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
 			playerBall.setPosition(ballPos);
@@ -365,4 +372,20 @@ ofVec3f ofApp::getCameraFocus() {
 	return cameraFocus;
 }
 
+void ofApp::spawnLight(tile* cur) {
+	cout << cur->getCoordinateX() << "-" << cur->getCoordinateY() << "-" << cur->getLightStatus() << '\n';
+	if (cur->getLightStatus() == 1) {
+		ofLight newLight;
 
+		newLight.setPosition(ofVec3f(cur->getCoordinateX(), playerSize * 4, cur->getCoordinateY()*-1));
+		newLight.setDiffuseColor(ofColor(255.0f, 0.0f, 0.0f));
+		newLight.setSpecularColor(ofColor(0.0f, 0.0f, 0.0f));
+		newLight.setOrientation(ofVec3f(-90.0, 0.0, 0.0));
+		newLight.setSpotlight();
+		newLight.setSpotConcentration(0.5f);
+
+		lights.push_back(newLight);
+		cur->setLightStatus(2);
+		std::cout << "Light spawned";
+	}
+}

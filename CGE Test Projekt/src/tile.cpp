@@ -4,7 +4,7 @@ tile::tile(){
 
 }
 
-tile::tile(int posX, int posY, float tilesize, bool walled=false){
+tile::tile(int posX, int posY, float tilesize, bool walled=false, int lightStatus=0){
 	this->gridPosX = posX;
 	this->gridPosY = posY;
 	this->tilesize = tilesize;

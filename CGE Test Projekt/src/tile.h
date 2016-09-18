@@ -14,7 +14,7 @@ private:
 	
 public:
 	tile();
-	tile(int posX, int posY, float tilesize, bool walled);
+	tile(int posX, int posY, float tilesize, bool walled, int lightStatus);
 	void positionAt(int posX, int posY);
 	bool getWalled();
 	void setWalled(bool wall);
