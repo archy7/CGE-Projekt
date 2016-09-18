@@ -100,25 +100,78 @@ void tileGrid::setupGround(){
 
 void tileGrid::setupWalls(){
 
-	//irgendwo hier is ein bug der dafür sorgt, dass alle wände ineinander spawnen
-	for (auto& wall : this->wallVec) {
-		ofVec3f wallPosition = wall.getPosition(tilesize);
-		ofBoxPrimitive newVisualWall;
-		newVisualWall.setPosition(wallPosition);
-		int wallGridLength = wall.getWallLength();
+	for (auto& wally : this->wallVec) {
+		if (wally.getWallLength() > 1) {
+			if (wally.isWallHoricontal()) {
+				int newstart = wally.getStartX();
+				int newend = wally.getStartX() + 1;
+				while (newend <= wally.getEndX()) {
+					wall* temp = new wall(newstart, wally.getStartY(), newend, wally.getEndY());
 
+					ofVec3f wallPosition = temp->getPosition(tilesize);
+					ofBoxPrimitive newVisualWall;
+					newVisualWall.setPosition(wallPosition);
 
-		float wallActualLength = wallGridLength * tilesize;
-		newVisualWall.setDepth(tilesize);
-		newVisualWall.setHeight(wallHeight);
-		newVisualWall.setWidth(wallActualLength);
-		newVisualWall.move(0, wallHeight/2, 0);
+					newVisualWall.setDepth(tilesize);
+					newVisualWall.setHeight(wallHeight);
+					newVisualWall.setWidth(tilesize*temp->getWallLength());
+					newVisualWall.move(0, wallHeight / 2, 0);
 
-		if (!wall.isWallHoricontal()) {
-			newVisualWall.rotate(90, 0, 1, 0);
+					this->visibleWallVec.push_back(newVisualWall);
+
+					delete temp;
+					if (newend == wally.getEndX())
+						break;
+					newstart += 2;
+					newend = newstart + 1;
+					if (newend == wally.getEndX() + 1) {
+						newstart = wally.getEndX() - 1;
+						newend = wally.getEndX();
+					}
+				}
+			}
+			else {
+				int newstart = wally.getStartY();
+				int newend = wally.getStartY() + 1;
+				while (newend <= wally.getEndY()) {
+					wall* temp = new wall(wally.getStartX(), newstart, wally.getEndX(), newend);
+
+					ofVec3f wallPosition = temp->getPosition(tilesize);
+					ofBoxPrimitive newVisualWall;
+					newVisualWall.setPosition(wallPosition);
+
+					newVisualWall.setDepth(tilesize*temp->getWallLength());
+					newVisualWall.setHeight(wallHeight);
+					newVisualWall.setWidth(tilesize);
+					newVisualWall.move(0, wallHeight / 2, 0);
+
+					this->visibleWallVec.push_back(newVisualWall);
+
+					delete temp;
+
+					if (newend == wally.getEndY())
+						break;
+					newstart+=2;
+					newend = newstart + 1;
+					if (newend == wally.getEndY() + 1) {
+						newstart = wally.getEndY() - 1;
+						newend = wally.getEndY();
+					}
+				}
+			}
 		}
+		else {
+			ofVec3f wallPosition = wally.getPosition(tilesize);
+			ofBoxPrimitive newVisualWall;
+			newVisualWall.setPosition(wallPosition);
 
-		this->visibleWallVec.push_back(newVisualWall);
+			newVisualWall.setDepth(tilesize*wally.getWallLength());
+			newVisualWall.setHeight(wallHeight);
+			newVisualWall.setWidth(tilesize);
+			newVisualWall.move(0, wallHeight / 2, 0);
+
+			this->visibleWallVec.push_back(newVisualWall);
+		}
 	}
 }
 
@@ -264,26 +317,12 @@ void tileGrid::buildLab(){
 }
 
 void tileGrid::addLights() {
+	//8 lights max
 	this->getTileAt(3, 4)->setLightStatus(1);
-	this->getTileAt(3, 3)->setLightStatus(1);
-	this->getTileAt(9, 3)->setLightStatus(1);
 	this->getTileAt(9, 2)->setLightStatus(1);
-	this->getTileAt(9, 1)->setLightStatus(1);
-	this->getTileAt(20, 7)->setLightStatus(1);
-	this->getTileAt(21, 7)->setLightStatus(1);
 	this->getTileAt(20, 8)->setLightStatus(1);
-	this->getTileAt(21, 8)->setLightStatus(1);
-	this->getTileAt(26, 7)->setLightStatus(1);
-	this->getTileAt(27, 7)->setLightStatus(1);
 	this->getTileAt(26, 8)->setLightStatus(1);
-	this->getTileAt(27, 8)->setLightStatus(1);
-	this->getTileAt(35, 7)->setLightStatus(1);
-	this->getTileAt(36, 7)->setLightStatus(1);
-	this->getTileAt(35, 8)->setLightStatus(1);
 	this->getTileAt(36, 8)->setLightStatus(1);
-	this->getTileAt(49, 7)->setLightStatus(1);
-	this->getTileAt(50, 7)->setLightStatus(1);
-	this->getTileAt(49, 8)->setLightStatus(1);
 	this->getTileAt(50, 8)->setLightStatus(1);
 }
 
@@ -357,7 +396,7 @@ tile* tileGrid::getTileAtVector(ofVec3f position){
 
 	//std::cout << x << '-' << y <<'\n';
 
-	if (x <= gridSizeY && y <= gridSizeX)
+	if (x <= gridSizeY-1 && y <= gridSizeX-1)
 		return this->getTileAt(x, y);
 	else
 		return NULL;

@@ -18,4 +18,8 @@ public:
 	ofVec3f getPosition(float tilesize);
 	int getWallLength();
 	bool isWallHoricontal();
+	int getStartX();
+	int getStartY();
+	int getEndX();
+	int getEndY();
 };

@@ -149,7 +149,7 @@ void ofApp::draw(){
 	playerBall.draw();
 
 	ofSetColor(wireframe_color);
-	playerBoundingBox.drawWireframe();
+	//playerBoundingBox.drawWireframe();
 	ofSetColor(ground_color);
 
 	playerLight.disable();

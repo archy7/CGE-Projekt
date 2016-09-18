@@ -45,3 +45,19 @@ bool wall::isWallHoricontal(){
 
 	return startY == endY ? true : false;
 }
+
+int wall::getStartX() {
+	return startX;
+}
+
+int wall::getEndX() {
+	return endX;
+}
+
+int wall::getStartY() {
+	return startY;
+}
+
+int wall::getEndY() {
+	return endY;
+}
