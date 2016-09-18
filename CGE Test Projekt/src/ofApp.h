@@ -16,7 +16,7 @@ class ofApp : public ofBaseApp{
 		void drawFPS();
 
 		//GAME LOGIC
-		float ballSpeed = 1;
+		float ballSpeed = 4.0f;
 		bool paused = false;
 		float tilesize = 20;
 		tileGrid* tileGrid = nullptr;

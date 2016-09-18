@@ -178,6 +178,7 @@ void ofApp::keyPressed(int key){
 			playerBall.setPosition(ballPos);
 			cameraFocus = this->getCameraFocus();
 		}
+		
 		//playerBall.rotate()
 		break;
 	}
@@ -196,6 +197,7 @@ void ofApp::keyPressed(int key){
 			playerBall.setPosition(ballPos);
 			cameraFocus = this->getCameraFocus();
 		}
+		
 		//playerBall.rotate()
 		break;
 	}
@@ -214,6 +216,7 @@ void ofApp::keyPressed(int key){
 			playerBall.setPosition(ballPos);
 			cameraFocus = this->getCameraFocus();
 		}
+		
 		//playerBall.rotate()
 		break;
 	}
@@ -232,6 +235,7 @@ void ofApp::keyPressed(int key){
 			playerBall.setPosition(ballPos);
 			cameraFocus = this->getCameraFocus();
 		}
+		
 		//playerBall.rotate()
 		break;
 	}
@@ -373,7 +377,7 @@ ofVec3f ofApp::getCameraFocus() {
 }
 
 void ofApp::spawnLight(tile* cur) {
-	cout << cur->getCoordinateX() << "-" << cur->getCoordinateY() << "-" << cur->getLightStatus() << '\n';
+	//cout << cur->getCoordinateX() << "-" << cur->getCoordinateY() << "-" << cur->getLightStatus() << '\n';
 	if (cur->getLightStatus() == 1) {
 		ofLight newLight;
 
@@ -386,6 +390,6 @@ void ofApp::spawnLight(tile* cur) {
 
 		lights.push_back(newLight);
 		cur->setLightStatus(2);
-		std::cout << "Light spawned";
+		//std::cout << "Light spawned";
 	}
 }

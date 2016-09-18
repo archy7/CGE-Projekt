@@ -106,6 +106,8 @@ void tileGrid::setupWalls(){
 		ofBoxPrimitive newVisualWall;
 		newVisualWall.setPosition(wallPosition);
 		int wallGridLength = wall.getWallLength();
+
+
 		float wallActualLength = wallGridLength * tilesize;
 		newVisualWall.setDepth(tilesize);
 		newVisualWall.setHeight(wallHeight);
@@ -146,7 +148,9 @@ void tileGrid::loadTextures(){
 void tileGrid::buildLab(){
 	//HARDCODE
 
-	this->buildWallAt(0, 0, 0, 11);
+	this->buildWallAt(0, 0, 0, 3);
+	this->buildWallAt(0, 4, 0, 7);
+	this->buildWallAt(0, 8, 0, 11);
 	this->buildWallAt(1, 0, 3, 0);
 	this->buildWallAt(3, 1, 3, 2);
 	this->buildWallAt(4, 2, 5, 2);
@@ -353,7 +357,7 @@ tile* tileGrid::getTileAtVector(ofVec3f position){
 
 	//std::cout << x << '-' << y <<'\n';
 
-	if (x <= gridSizeX && y <= gridSizeY)
+	if (x <= gridSizeY && y <= gridSizeX)
 		return this->getTileAt(x, y);
 	else
 		return NULL;
