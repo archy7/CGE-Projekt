@@ -88,14 +88,22 @@ void tileGrid::allocateMemory() {
 }
 
 void tileGrid::setupGround(){
-
-	//black magic kind of
-	ofVec3f groundPosition(0,0,0);
+	for (int x = 0; x <= gridSizeX; x++) {
+		for (int y = 0; y <= gridSizeY; y++) {
+			ofBoxPrimitive box;
+			box.setPosition(y*tilesize, 0, -x*tilesize);
+			box.setHeight(1);
+			box.setWidth(tilesize);
+			box.setDepth(tilesize);
+			groundVec.push_back(box);
+		}
+	}
+	/*ofVec3f groundPosition(0,0,0);
 	this->ground.setPosition(groundPosition);
 	this->ground.setHeight(1);
 	this->ground.setWidth(this->gridSizeY * tilesize);
 	this->ground.setDepth(this->gridSizeY * tilesize);
-	this->ground.move(this->gridSizeY*this->tilesize / 2, 0, -this->gridSizeX*this->tilesize / 2);
+	this->ground.move(this->gridSizeY*this->tilesize / 2, 0, -this->gridSizeX*this->tilesize / 2);*/
 }
 
 void tileGrid::setupWalls(){
@@ -408,7 +416,9 @@ void tileGrid::draw(){
 
 	ofSetColor(white);
 	this->groundImage.getTexture().bind();
-	this->ground.draw();
+	for (auto &groundtile : groundVec) {
+		groundtile.draw();
+	}
 
 
 	//ofSetColor(wall_color);

@@ -46,8 +46,8 @@ class ofApp : public ofBaseApp{
 
 		double cameraAngleX = 180;
 		double cameraAngleY = 90;
-		int cameraOffsetHori = 60;
-		int cameraOffsetVerti = 20;
+		int cameraOffsetHori = 30;
+		int cameraOffsetVerti = 10;
 		
 		int mousePosX = 0;
 		int mousePosY = 0;

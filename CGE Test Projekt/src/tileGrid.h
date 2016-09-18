@@ -16,6 +16,7 @@ private:
 
 	std::vector<wall> wallVec;
 	std::vector<ofBoxPrimitive> visibleWallVec;
+	std::vector<ofBoxPrimitive> groundVec;
 
 	ofBoxPrimitive ground;
 

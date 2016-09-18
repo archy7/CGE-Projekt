@@ -71,8 +71,8 @@ void ofApp::setup(){
 
 	cout << "Player starting postion: x:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateX() << " y:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateY() << endl;
 
-	float playerStartX = this->tileGrid->getTileAt(1, 1)->getCoordinateX();
-	float playerStartY = this->tileGrid->getTileAt(1, 1)->getCoordinateY();
+	float playerStartX = this->tileGrid->getTileAt(1, 2)->getCoordinateX();
+	float playerStartY = this->tileGrid->getTileAt(1, 2)->getCoordinateY();
 
 	playerPosition = ofVec3f(playerStartX, playerSize/2, -playerStartY);
 	playerBall.setPosition(playerPosition);
