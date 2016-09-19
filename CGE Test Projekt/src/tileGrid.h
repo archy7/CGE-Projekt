@@ -46,6 +46,7 @@ public:
 	float getWallHeight();
 
 	tile* getTileAtVector(ofVec3f position);
+	bool checkSides(ofVec3f position, float x, float z);
 
 	void draw();
 	/*static int cToEuklidX(int posX);

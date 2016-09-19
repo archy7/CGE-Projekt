@@ -410,6 +410,18 @@ tile* tileGrid::getTileAtVector(ofVec3f position){
 		return NULL;
 }
 
+bool tileGrid::checkSides(ofVec3f position, float x, float z) {
+	position.x += x;
+	position.z += z;
+	if (this->getTileAtVector(position)->getWalled())
+		return false;
+	position.x -= 2 * x;
+	position.z -= 2 * z;
+	if (this->getTileAtVector(position)->getWalled())
+		return false;
+	return true;
+}
+
 void tileGrid::draw(){
 	ofColor white(255, 255, 255); //white
 	//ofColor wall_color(0, 255, 0); //green

@@ -172,11 +172,13 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t!=NULL && !t->getWalled()) {
-			spawnLight(t);
-			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
-			
-			playerBall.setPosition(ballPos);
-			cameraFocus = this->getCameraFocus();
+			if (this->tileGrid->checkSides(wallPos, playerSize, 0)) {
+				spawnLight(t);
+				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+
+				playerBall.setPosition(ballPos);
+				cameraFocus = this->getCameraFocus();
+			}
 		}
 		
 		//playerBall.rotate()
@@ -191,11 +193,13 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
-			spawnLight(t);
-			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+			if (this->tileGrid->checkSides(wallPos, 0, playerSize)) {
+				spawnLight(t);
+				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-			playerBall.setPosition(ballPos);
-			cameraFocus = this->getCameraFocus();
+				playerBall.setPosition(ballPos);
+				cameraFocus = this->getCameraFocus();
+			}
 		}
 		
 		//playerBall.rotate()
@@ -210,11 +214,13 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
-			spawnLight(t);
-			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+			if (this->tileGrid->checkSides(wallPos, playerSize, 0)) {
+				spawnLight(t);
+				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-			playerBall.setPosition(ballPos);
-			cameraFocus = this->getCameraFocus();
+				playerBall.setPosition(ballPos);
+				cameraFocus = this->getCameraFocus();
+			}
 		}
 		
 		//playerBall.rotate()
@@ -229,11 +235,13 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
-			spawnLight(t);
-			//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
+			if (this->tileGrid->checkSides(wallPos, 0, playerSize)) {
+				spawnLight(t);
+				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-			playerBall.setPosition(ballPos);
-			cameraFocus = this->getCameraFocus();
+				playerBall.setPosition(ballPos);
+				cameraFocus = this->getCameraFocus();
+			}
 		}
 		
 		//playerBall.rotate()
