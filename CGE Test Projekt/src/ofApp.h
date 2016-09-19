@@ -19,7 +19,7 @@ class ofApp : public ofBaseApp{
 		void drawFPS();			//Funktion fuer FPS-Anzeige
 
 		//GAME LOGIC
-		float ballSpeed = 4.0f;			//Geschwindigkeit mit der sich der Ball bewegt
+		float ballSpeed = 2.0f;			//Geschwindigkeit mit der sich der Ball bewegt
 		bool paused = false;			//Gibt an ob das Spiel pausiert ist	
 		float tilesize = 20;			//Groesse eines Tiles
 		tileGrid* tileGrid = nullptr;	//tileGrid

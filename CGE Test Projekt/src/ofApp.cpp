@@ -109,109 +109,110 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
 
-	switch (key) {
-	case 'w': {
-		//Bewegung nach Norden == -z
-		ofVec3f ballPos = playerBoundingBox.getPosition();
-		ballPos.z = ballPos.z - 1 * ballSpeed;
+	if (!paused) {
+		switch (key) {
+		case 'w': {
+			//Bewegung nach Norden == -z
+			ofVec3f ballPos = playerBoundingBox.getPosition();
+			ballPos.z = ballPos.z - 1 * ballSpeed;
 
-		ofVec3f wallPos = ballPos;
-		wallPos.z -= playerSize / 2;
+			ofVec3f wallPos = ballPos;
+			wallPos.z -= playerSize / 2;
 
-		/*
-		 * Collision Detection
-		 */
-		tile* t = this->tileGrid->getTileAtVector(wallPos);				//Tile, das betreten wird
-		if (t!=NULL && !t->getWalled()) {								//Check ob dieses Tile eine Mauer hat
-			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {	//Check ob der Ball andere Tiles mit Mauern beruehren wuerde
-				this->tileGrid->spawnLight(t, playerSize);				//Licht aktivieren wenn noetig
-				playerBoundingBox.setPosition(ballPos);				
-				movePlayerBall();
-				cameraFocus = this->getCameraFocus();
+			/*
+			 * Collision Detection
+			 */
+			tile* t = this->tileGrid->getTileAtVector(wallPos);				//Tile, das betreten wird
+			if (t != NULL && !t->getWalled()) {								//Check ob dieses Tile eine Mauer hat
+				if (this->tileGrid->checkSides(wallPos, playerSize / 2, 0)) {	//Check ob der Ball andere Tiles mit Mauern beruehren wuerde
+					this->tileGrid->spawnLight(t, playerSize);				//Licht aktivieren wenn noetig
+					playerBoundingBox.setPosition(ballPos);
+					movePlayerBall();
+					cameraFocus = this->getCameraFocus();
+				}
 			}
+
+			playerBall.rotate(-7.5, 1, 0, 0);
+			break;
 		}
+		case 'a': {
+			//Bewegung nach Westen == -x
+			ofVec3f ballPos = playerBoundingBox.getPosition();
+			ballPos.x = ballPos.x - 1 * ballSpeed;
 
-		playerBall.rotate(-7.5, 1, 0, 0);
-		break;
-	}
-	case 'a': {
-		//Bewegung nach Westen == -x
-		ofVec3f ballPos = playerBoundingBox.getPosition();
-		ballPos.x = ballPos.x - 1 * ballSpeed;
+			ofVec3f wallPos = ballPos;
+			wallPos.x -= playerSize / 2;
 
-		ofVec3f wallPos = ballPos;
-		wallPos.x -= playerSize / 2;
-
-		/*
-		 * Collision Detection
-		 */
-		tile* t = this->tileGrid->getTileAtVector(wallPos);
-		if (t != NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, 0, playerSize/2)) {
-				this->tileGrid->spawnLight(t, playerSize);
-				playerBoundingBox.setPosition(ballPos);
-				movePlayerBall();
-				cameraFocus = this->getCameraFocus();
+			/*
+			 * Collision Detection
+			 */
+			tile* t = this->tileGrid->getTileAtVector(wallPos);
+			if (t != NULL && !t->getWalled()) {
+				if (this->tileGrid->checkSides(wallPos, 0, playerSize / 2)) {
+					this->tileGrid->spawnLight(t, playerSize);
+					playerBoundingBox.setPosition(ballPos);
+					movePlayerBall();
+					cameraFocus = this->getCameraFocus();
+				}
 			}
+
+			playerBall.rotate(7.5, 0, 0, 1);
+			break;
 		}
-		
-		playerBall.rotate(7.5, 0, 0, 1);
-		break;
-	}
-	case 's': {
-		//Bewegung nach Sueden == +z
-		ofVec3f ballPos = playerBoundingBox.getPosition();
-		ballPos.z = ballPos.z + 1 * ballSpeed;
+		case 's': {
+			//Bewegung nach Sueden == +z
+			ofVec3f ballPos = playerBoundingBox.getPosition();
+			ballPos.z = ballPos.z + 1 * ballSpeed;
 
-		ofVec3f wallPos = ballPos;
-		wallPos.z += playerSize / 2;
+			ofVec3f wallPos = ballPos;
+			wallPos.z += playerSize / 2;
 
-		/*
-		 * Collision Detection
-		 */
-		tile* t = this->tileGrid->getTileAtVector(wallPos);
-		if (t != NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {
-				this->tileGrid->spawnLight(t, playerSize);
-				playerBoundingBox.setPosition(ballPos);
-				movePlayerBall();
-				cameraFocus = this->getCameraFocus();
+			/*
+			 * Collision Detection
+			 */
+			tile* t = this->tileGrid->getTileAtVector(wallPos);
+			if (t != NULL && !t->getWalled()) {
+				if (this->tileGrid->checkSides(wallPos, playerSize / 2, 0)) {
+					this->tileGrid->spawnLight(t, playerSize);
+					playerBoundingBox.setPosition(ballPos);
+					movePlayerBall();
+					cameraFocus = this->getCameraFocus();
+				}
 			}
+
+			playerBall.rotate(7.5, 1, 0, 0);
+			break;
 		}
-		
-		playerBall.rotate(7.5, 1, 0, 0);
-		break;
-	}
-	case 'd': {
-		//Bewegung nach Osten == +x
-		ofVec3f ballPos = playerBoundingBox.getPosition();
-		ballPos.x = ballPos.x + 1 * ballSpeed;
+		case 'd': {
+			//Bewegung nach Osten == +x
+			ofVec3f ballPos = playerBoundingBox.getPosition();
+			ballPos.x = ballPos.x + 1 * ballSpeed;
 
-		ofVec3f wallPos = ballPos;
-		wallPos.x += playerSize / 2;
+			ofVec3f wallPos = ballPos;
+			wallPos.x += playerSize / 2;
 
-		/*
-		 * Collision Detection
-		 */
-		tile* t = this->tileGrid->getTileAtVector(wallPos);
-		if (t != NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, 0, playerSize/2)) {
-				this->tileGrid->spawnLight(t, playerSize);
-				playerBoundingBox.setPosition(ballPos);
-				movePlayerBall();
-				cameraFocus = this->getCameraFocus();
+			/*
+			 * Collision Detection
+			 */
+			tile* t = this->tileGrid->getTileAtVector(wallPos);
+			if (t != NULL && !t->getWalled()) {
+				if (this->tileGrid->checkSides(wallPos, 0, playerSize / 2)) {
+					this->tileGrid->spawnLight(t, playerSize);
+					playerBoundingBox.setPosition(ballPos);
+					movePlayerBall();
+					cameraFocus = this->getCameraFocus();
+				}
 			}
+
+			playerBall.rotate(-7.5, 0, 0, 1);
+			break;
 		}
-		
-		playerBall.rotate(-7.5, 0, 0, 1);
-		break;
+		default: {
+		}
+		}
 	}
-	case 'p': {
+	if (key == 'p') {
 		paused = !paused;
-		break;
-	}
-	default: {
-	}
 	}
 }
 

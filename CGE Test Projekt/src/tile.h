@@ -1,7 +1,7 @@
 #pragma once
 /*
  * header-file fuer die Definition eines "Tiles" des Spielfeldes
- * Das gesamte Spielfeld besteht as Tiles, welche entweder leer sind oder eine Mauer besitzen
+ * Das gesamte Spielfeld besteht aus Tiles, welche entweder leer sind oder eine Mauer besitzen
  * Andreas BRICHTA, Markus KOLLER
  */
 class tile {
