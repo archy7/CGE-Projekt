@@ -4,8 +4,11 @@
 #include "tile.h"
 #include "tileGrid.h"
 
-
-
+/*
+ * header-file des eigentlichen Spiels
+ * zeichnet die Szene inkl. Kamera & Licht und intepretiert User-inputs
+ * Andreas BRICHTA, Markus KOLLER
+ */
 class ofApp : public ofBaseApp{
 
 	private:
@@ -58,9 +61,7 @@ class ofApp : public ofBaseApp{
 		
 		ofVec3f getCameraFocus();
 		void moveCamera();
-		
-		std::vector<ofLight>lights;
-		void spawnLight(tile* cur);
+		void movePlayerBall();
 
 	public:
 		ofApp();
@@ -81,6 +82,5 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
 		
 };

@@ -18,6 +18,10 @@ private:
 	std::vector<ofBoxPrimitive> visibleWallVec;
 	std::vector<ofBoxPrimitive> groundVec;
 
+	std::vector<ofLight>lights;
+	float lighttilesX[7];
+	float lighttilesY[7];
+
 	ofBoxPrimitive ground;
 
 	void allocateMemory();
@@ -53,4 +57,6 @@ public:
 	static int cToEuklidY(int posY);
 	static int euklidToCX(int posX);
 	static int euklidToCY(int posY);*/
+
+	void spawnLight(tile* cur, float playerSize);
 };

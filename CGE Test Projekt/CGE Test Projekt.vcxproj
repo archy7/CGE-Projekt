@@ -177,14 +177,12 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
-    <ClCompile Include="src\playerBallGroup.cpp" />
     <ClCompile Include="src\tile.cpp" />
     <ClCompile Include="src\tileGrid.cpp" />
     <ClCompile Include="src\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tile.h" />
-    <ClInclude Include="src\playerBallGroup.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\tileGrid.h" />
     <ClInclude Include="src\wall.h" />

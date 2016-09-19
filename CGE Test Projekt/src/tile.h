@@ -6,7 +6,7 @@ private:
 	int gridPosY = -1;
 	float tilesize = -1;
 	bool walled = false;
-	int lightStatus = 0;
+	int lightStatus = -1;
 
 	float positionX = -1;
 	float positionY = -1;

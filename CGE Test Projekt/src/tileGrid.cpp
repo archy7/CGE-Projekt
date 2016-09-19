@@ -325,13 +325,42 @@ void tileGrid::buildLab(){
 }
 
 void tileGrid::addLights() {
-	//8 lights max
+	//Light 1
+	lighttilesX[0] = 3.0f;
+	lighttilesY[0] = 3.5f;
+	this->getTileAt(3, 3)->setLightStatus(1);
 	this->getTileAt(3, 4)->setLightStatus(1);
-	this->getTileAt(9, 2)->setLightStatus(1);
-	this->getTileAt(20, 8)->setLightStatus(1);
-	this->getTileAt(26, 8)->setLightStatus(1);
-	this->getTileAt(36, 8)->setLightStatus(1);
-	this->getTileAt(50, 8)->setLightStatus(1);
+	//Light 2
+	lighttilesX[1] = 9.0f;
+	lighttilesY[1] = 2.0f;
+	this->getTileAt(9, 1)->setLightStatus(2);
+	this->getTileAt(9, 2)->setLightStatus(2);
+	this->getTileAt(9, 3)->setLightStatus(2);
+	//Light 3
+	lighttilesX[2] = 19.0f;
+	lighttilesY[2] = 7.5f;
+	this->getTileAt(19, 7)->setLightStatus(3);
+	this->getTileAt(19, 8)->setLightStatus(3);
+	//Light 4
+	lighttilesX[3] = 28.0f;
+	lighttilesY[3] = 7.5f;
+	this->getTileAt(28, 7)->setLightStatus(4);
+	this->getTileAt(28, 8)->setLightStatus(4);
+	//Light 5
+	lighttilesX[4] = 35.5f;
+	lighttilesY[4] = 4.0f;
+	this->getTileAt(35, 4)->setLightStatus(5);
+	this->getTileAt(36, 4)->setLightStatus(5);
+	//Light 6
+	lighttilesX[5] = 41.5f;
+	lighttilesY[5] = 4.0f;
+	this->getTileAt(41, 4)->setLightStatus(6);
+	this->getTileAt(42, 4)->setLightStatus(6);
+	//Light 7
+	lighttilesX[6] = 49.5f;
+	lighttilesY[6] = 16.0f;
+	this->getTileAt(49, 16)->setLightStatus(7);
+	this->getTileAt(50, 16)->setLightStatus(7);
 }
 
 tile* tileGrid::getTileAt(int gridPosX, int gridPosY){
@@ -432,11 +461,14 @@ void tileGrid::draw(){
 		groundtile.draw();
 	}
 
-
 	//ofSetColor(wall_color);
 	this->wallImage.getTexture().bind();
 	for (auto& wall : this->visibleWallVec) {
 		wall.draw();
+	}
+
+	for (auto &light : lights) {
+		light.enable();
 	}
 }
 
@@ -477,6 +509,34 @@ void tileGrid::buildWallAt(int startX, int startY, int endX, int endY){
 
 	wall newWall = wall(startX, startY, endX, endY);
 	this->wallVec.push_back(newWall);
+}
+
+void tileGrid::spawnLight(tile* cur, float playerSize) {
+	//cout << cur->getCoordinateX() << "-" << cur->getCoordinateY() << "-" << cur->getLightStatus() << '\n';
+	if (cur->getLightStatus() >0) {
+		int curStatus = cur->getLightStatus();
+		ofLight newLight;
+
+		newLight.setPosition(ofVec3f(lighttilesX[curStatus-1]*tilesize, playerSize * 4, lighttilesY[curStatus-1]*tilesize*-1));
+		newLight.setDiffuseColor(ofColor(255.0f, 0.0f, 0.0f));
+		newLight.setSpecularColor(ofColor(255.0f, 0.0f, 0.0f));
+		newLight.setOrientation(ofVec3f(-90.0, 0.0, 0.0));
+		newLight.setSpotlight();
+		newLight.setSpotConcentration(0.5f);
+
+		lights.push_back(newLight);
+
+		cout << "spawn light " << curStatus << "\n";
+
+		for (int x = 0; x < this->gridSizeX; ++x) {
+			for (int y = 0; y < this->gridSizeY; ++y) {
+				if (grid[x][y]->getLightStatus() == curStatus) {
+					grid[x][y]->setLightStatus(0);
+				}
+			}
+		}
+		//std::cout << "Light spawned";
+	}
 }
 
 /*int tileGrid::cToEuklidX(int posX){

@@ -4,11 +4,12 @@ tile::tile(){
 
 }
 
-tile::tile(int posX, int posY, float tilesize, bool walled=false, int lightStatus=0){
+tile::tile(int posX, int posY, float tilesize, bool walled=false, int lightStatus=-1){
 	this->gridPosX = posX;
 	this->gridPosY = posY;
 	this->tilesize = tilesize;
 	this->walled = walled;
+	this->lightStatus = lightStatus;
 
 	this->positionAt(this->gridPosX, this->gridPosY);
 }

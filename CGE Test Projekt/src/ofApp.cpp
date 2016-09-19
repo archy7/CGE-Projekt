@@ -2,10 +2,6 @@
 #include <direct.h>
 #include <stdio.h>
 
-
-
-
-
 ofApp::ofApp(){
 
 }
@@ -43,7 +39,7 @@ void ofApp::setup(){
 	string cwd(cCurrentPath);
 
 	string boulderTexturePath(cwd + "\\resource\\textures\\boulder.jpg");
-	std::cout << boulderTexturePath << std::endl;
+	//std::cout << boulderTexturePath << std::endl;
 	boulderImage.loadImage(boulderTexturePath);
 
 	//printf("The current working directory is %s", cCurrentPath);
@@ -69,18 +65,14 @@ void ofApp::setup(){
 	ground.rotate(90, 1, 0, 0);*/
 
 
-	cout << "Player starting postion: x:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateX() << " y:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateY() << endl;
+	//cout << "Player starting postion: x:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateX() << " y:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateY() << endl;
 
 	float playerStartX = this->tileGrid->getTileAt(1, 2)->getCoordinateX();
 	float playerStartY = this->tileGrid->getTileAt(1, 2)->getCoordinateY();
 
-	playerPosition = ofVec3f(playerStartX, playerSize/2, -playerStartY);
-	playerBall.setPosition(playerPosition);
+	playerPosition = ofVec3f(playerStartX, playerSize / 2, -playerStartY);
 
-	
-	playerBall.setRadius(playerSize / 2);
-
-	playerLight.setPosition(ofVec3f(playerStartX, playerSize*4, -playerStartY));
+	playerLight.setPosition(ofVec3f(playerStartX, playerSize * 4, -playerStartY));
 	//playerLight.setParent(playerBall);
 	playerLight.setDiffuseColor(ofColor(255.0f, 255.0f, 255.0f));
 	playerLight.setSpecularColor(ofColor(255.0f, 255.0f, 255.0f));
@@ -89,16 +81,16 @@ void ofApp::setup(){
 	playerLight.setSpotlight();
 	playerLight.setSpotConcentration(0.5f);
 
-	//playerBoundingBox.setPosition(playerPosition); // + ofVec3f(0, 0, -playerSize / 2)
-	//playerBoundingBox.setPosition(0,0,0); // + ofVec3f(0, 0, -playerSize / 2)
 	playerBoundingBox.setWidth(playerSize);
 	playerBoundingBox.setHeight(playerSize);
 	playerBoundingBox.setDepth(playerSize);
-	playerBoundingBox.setParent(playerBall);
+	playerBoundingBox.setPosition(playerPosition);
 
-	camera.setPosition(0, 60, 60);
-	camera.setParent(playerBall);
-	//ofVec3f positionZero(0, 0, 0);
+	playerBall.setRadius(playerSize / 2);
+
+	movePlayerBall();
+	camera.setParent(playerBoundingBox);
+
 	cameraFocus = this->getCameraFocus();
 	camera.lookAt(cameraFocus);
 
@@ -127,7 +119,7 @@ void ofApp::draw(){
 
 	ofColor wireframe_color(255, 0, 0); //red
 
-	ofVec3f playerPos = playerBall.getPosition();
+	ofVec3f playerPos = playerBoundingBox.getPosition();
 
 	//std::cout << "x:" << playerPos.x << "-y:" << playerPos.y << "-z:" << playerPos.z << '\n';
 
@@ -138,9 +130,7 @@ void ofApp::draw(){
 
 	//in camera context
 	playerLight.enable();
-	for (auto &light:lights) {
-		light.enable();
-	}
+	
 	//playerLight.draw();
 
 	this->tileGrid->draw();
@@ -164,7 +154,7 @@ void ofApp::keyPressed(int key){
 	switch (key) {
 	case 'w': {
 		//move forward == -z
-		ofVec3f ballPos = playerBall.getPosition();
+		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.z = ballPos.z - 1 * ballSpeed;
 
 		ofVec3f wallPos = ballPos;
@@ -172,78 +162,88 @@ void ofApp::keyPressed(int key){
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t!=NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, playerSize, 0)) {
-				spawnLight(t);
+			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {
+				this->tileGrid->spawnLight(t, playerSize);
 				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-				playerBall.setPosition(ballPos);
+				playerBoundingBox.setPosition(ballPos);
+				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
 			}
 		}
-		
+		playerBall.rotate(-7.5, 1, 0, 0);
 		//playerBall.rotate()
 		break;
 	}
 	case 'a': {
 		//move left == -x
-		ofVec3f ballPos = playerBall.getPosition();
+		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.x = ballPos.x - 1 * ballSpeed;
+
 		ofVec3f wallPos = ballPos;
 		wallPos.x -= playerSize / 2;
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, 0, playerSize)) {
-				spawnLight(t);
+			if (this->tileGrid->checkSides(wallPos, 0, playerSize/2)) {
+				this->tileGrid->spawnLight(t, playerSize);
 				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-				playerBall.setPosition(ballPos);
+				playerBoundingBox.setPosition(ballPos);
+				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
 			}
 		}
 		
+		playerBall.rotate(7.5, 0, 0, 1);
 		//playerBall.rotate()
 		break;
 	}
 	case 's': {
 		//move back == +z
-		ofVec3f ballPos = playerBall.getPosition();
+		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.z = ballPos.z + 1 * ballSpeed;
+
 		ofVec3f wallPos = ballPos;
 		wallPos.z += playerSize / 2;
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, playerSize, 0)) {
-				spawnLight(t);
+			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {
+				this->tileGrid->spawnLight(t, playerSize);
 				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-				playerBall.setPosition(ballPos);
+				playerBoundingBox.setPosition(ballPos);
+				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
 			}
 		}
 		
 		//playerBall.rotate()
+		playerBall.rotate(7.5, 1, 0, 0);
 		break;
 	}
 	case 'd': {
 		//move right == +x
-		ofVec3f ballPos = playerBall.getPosition();
+		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.x = ballPos.x + 1 * ballSpeed;
+
 		ofVec3f wallPos = ballPos;
 		wallPos.x += playerSize / 2;
 
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, 0, playerSize)) {
-				spawnLight(t);
+			if (this->tileGrid->checkSides(wallPos, 0, playerSize/2)) {
+				this->tileGrid->spawnLight(t, playerSize);
 				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
 
-				playerBall.setPosition(ballPos);
+				playerBoundingBox.setPosition(ballPos);
+				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
 			}
 		}
 		
+		playerBall.rotate(-7.5, 0, 0, 1);
 		//playerBall.rotate()
 		break;
 	}
@@ -378,26 +378,12 @@ void ofApp::moveCamera(){
 
 ofVec3f ofApp::getCameraFocus() {
 
-	ofVec3f cameraFocus = playerBall.getPosition();
+	ofVec3f cameraFocus = playerBoundingBox.getPosition();
 	cameraFocus.y += cameraOffsetVerti;
 
 	return cameraFocus;
 }
 
-void ofApp::spawnLight(tile* cur) {
-	//cout << cur->getCoordinateX() << "-" << cur->getCoordinateY() << "-" << cur->getLightStatus() << '\n';
-	if (cur->getLightStatus() == 1) {
-		ofLight newLight;
-
-		newLight.setPosition(ofVec3f(cur->getCoordinateX(), playerSize * 4, cur->getCoordinateY()*-1));
-		newLight.setDiffuseColor(ofColor(255.0f, 0.0f, 0.0f));
-		newLight.setSpecularColor(ofColor(0.0f, 0.0f, 0.0f));
-		newLight.setOrientation(ofVec3f(-90.0, 0.0, 0.0));
-		newLight.setSpotlight();
-		newLight.setSpotConcentration(0.5f);
-
-		lights.push_back(newLight);
-		cur->setLightStatus(2);
-		//std::cout << "Light spawned";
-	}
+void ofApp::movePlayerBall() {
+	playerBall.setPosition(playerBoundingBox.getPosition());
 }
