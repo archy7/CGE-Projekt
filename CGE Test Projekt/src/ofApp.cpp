@@ -8,76 +8,57 @@ ofApp::ofApp(){
 
 ofApp::~ofApp()
 {
-	//delete this->playerGroup;
+
 }
 
-//--------------------------------------------------------------
 void ofApp::setup(){
 
-	//"SETTINGS"
-	ofSetFrameRate(60);
-	ofSetVerticalSync(false);
-	ofBackground(0);
-	ofSetGlobalAmbientColor(ofColor(10.0f, 10.0f, 10.0f));
-	
-	ofEnableDepthTest();
-	ofDisableArbTex();
+	/*
+	 * Alle noetigen openGL/openframeworks Einstellungen
+	 */
+	ofSetFrameRate(60);			//FPS festlegen
+	ofSetVerticalSync(false);	//VerticalSync deaktiviert
+	ofBackground(0);			//Kein Hintergrund
+	ofSetGlobalAmbientColor(ofColor(10.0f, 10.0f, 10.0f));	//Global Ambient Color ist ein dunkles grau
+	ofEnableDepthTest();		//DepthTest (z-Buffer) aktivieren
+	ofDisableArbTex();			//Erlaubt Textur-Features wie zB. mipmap
+	ofEnableLighting();			//Licht aktivieren
+	glShadeModel(GL_SMOOTH);	//Jedes Pixel Fragment hat eine eigene Farbberechnung 
 
-	ofEnableLighting();
-	glShadeModel(GL_SMOOTH);
-	//ofDisableAlphaBlending().
-
-
+	/*
+	 * Ball-Textur laden
+	 */
 	char cCurrentPath[FILENAME_MAX];
-
 	if (!_getcwd(cCurrentPath, sizeof(cCurrentPath)))
 	{
 		std::cerr << "whoops, _getcwd fucked up :x" << std::endl;
 	}
-	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
-
+	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
 	string cwd(cCurrentPath);
-
 	string boulderTexturePath(cwd + "\\resource\\textures\\boulder.jpg");
-	//std::cout << boulderTexturePath << std::endl;
 	boulderImage.loadImage(boulderTexturePath);
 
-	//printf("The current working directory is %s", cCurrentPath);
-	//std::cout << "The current working directory is " << cwd << std::endl;
-
-	/*testwall.setHeight(80);
-	testwall.setWidth(200);
-	testwall.setDepth(20);
-	testwall.setPosition(0, 40, -200);*/
-
-	//this->grid = this->grid.buildTileGridHard(53, 34);
-	//this->grid.printGridToConsole();
+	/*
+	 * Grid erstellen
+	 */
 	this->tileGrid = tileGrid::setUpGrid(53, 34, 40);
 	this->tileGrid->setWallHeight(50);
 	this->tileGrid->buildLab();
 	this->tileGrid->addLights();
 	this->tileGrid->printGridToConsole();
 
-	
-	/*ground.setPosition(0, 0, 0);
-	ground.setHeight(34*tilesize);
-	ground.setWidth(53*tilesize);
-	ground.rotate(90, 1, 0, 0);*/
-
-
-	//cout << "Player starting postion: x:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateX() << " y:" <<		this->tileGrid->getTileAt(1, 1)->getCoordinateY() << endl;
-
+	/*
+	 * Ball inkl. Licht und Kamera erstellen
+	 */
 	float playerStartX = this->tileGrid->getTileAt(1, 2)->getCoordinateX();
 	float playerStartY = this->tileGrid->getTileAt(1, 2)->getCoordinateY();
 
 	playerPosition = ofVec3f(playerStartX, playerSize / 2, -playerStartY);
 
-	playerLight.setPosition(ofVec3f(playerStartX, playerSize * 4, -playerStartY));
-	//playerLight.setParent(playerBall);
-	playerLight.setDiffuseColor(ofColor(255.0f, 255.0f, 255.0f));
+	playerLight.setPosition(ofVec3f(playerStartX, playerSize * 4, -playerStartY));	//Ueber dem Ball
+	playerLight.setDiffuseColor(ofColor(255.0f, 255.0f, 255.0f));					//Weißes Licht
 	playerLight.setSpecularColor(ofColor(255.0f, 255.0f, 255.0f));
-	//playerLight.setPointLight();
-	playerLight.setOrientation(ofVec3f(-90.0, 0.0, 0.0));
+	playerLight.setOrientation(ofVec3f(-90.0, 0.0, 0.0));							//Licht strahlt von oben nach unten
 	playerLight.setSpotlight();
 	playerLight.setSpotConcentration(0.5f);
 
@@ -90,17 +71,13 @@ void ofApp::setup(){
 
 	movePlayerBall();
 	camera.setParent(playerBoundingBox);
-
 	cameraFocus = this->getCameraFocus();
 	camera.lookAt(cameraFocus);
-
 	mousePosX = ofGetWindowWidth() / 2;
-
 	moveCamera();
 
 }
 
-//--------------------------------------------------------------
 void ofApp::update(){
 
 	if (!paused) {
@@ -108,39 +85,21 @@ void ofApp::update(){
 	}
 }
 
-//--------------------------------------------------------------
 void ofApp::draw(){
 
-	ofColor ground_color(255, 255, 255); //white
-
-	ofColor wall_color(0, 255, 0); //green
-
-	ofColor ball_color(0, 0, 255); //blue
-
-	ofColor wireframe_color(255, 0, 0); //red
-
 	ofVec3f playerPos = playerBoundingBox.getPosition();
-
-	//std::cout << "x:" << playerPos.x << "-y:" << playerPos.y << "-z:" << playerPos.z << '\n';
 
 	playerPos.y = playerSize*4;
 	playerLight.setPosition(playerPos);
 
 	camera.begin();
 
-	//in camera context
 	playerLight.enable();
-	
-	//playerLight.draw();
 
 	this->tileGrid->draw();
 
 	boulderImage.getTexture().bind();
 	playerBall.draw();
-
-	ofSetColor(wireframe_color);
-	//playerBoundingBox.drawWireframe();
-	ofSetColor(ground_color);
 
 	playerLight.disable();
 	camera.end();
@@ -148,47 +107,48 @@ void ofApp::draw(){
 	this->drawFPS();
 }
 
-//--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
 	switch (key) {
 	case 'w': {
-		//move forward == -z
+		//Bewegung nach Norden == -z
 		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.z = ballPos.z - 1 * ballSpeed;
 
 		ofVec3f wallPos = ballPos;
 		wallPos.z -= playerSize / 2;
 
-		tile* t = this->tileGrid->getTileAtVector(wallPos);
-		if (t!=NULL && !t->getWalled()) {
-			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {
-				this->tileGrid->spawnLight(t, playerSize);
-				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
-
-				playerBoundingBox.setPosition(ballPos);
+		/*
+		 * Collision Detection
+		 */
+		tile* t = this->tileGrid->getTileAtVector(wallPos);				//Tile, das betreten wird
+		if (t!=NULL && !t->getWalled()) {								//Check ob dieses Tile eine Mauer hat
+			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {	//Check ob der Ball andere Tiles mit Mauern beruehren wuerde
+				this->tileGrid->spawnLight(t, playerSize);				//Licht aktivieren wenn noetig
+				playerBoundingBox.setPosition(ballPos);				
 				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
 			}
 		}
+
 		playerBall.rotate(-7.5, 1, 0, 0);
-		//playerBall.rotate()
 		break;
 	}
 	case 'a': {
-		//move left == -x
+		//Bewegung nach Westen == -x
 		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.x = ballPos.x - 1 * ballSpeed;
 
 		ofVec3f wallPos = ballPos;
 		wallPos.x -= playerSize / 2;
 
+		/*
+		 * Collision Detection
+		 */
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
 			if (this->tileGrid->checkSides(wallPos, 0, playerSize/2)) {
 				this->tileGrid->spawnLight(t, playerSize);
-				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
-
 				playerBoundingBox.setPosition(ballPos);
 				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
@@ -196,47 +156,47 @@ void ofApp::keyPressed(int key){
 		}
 		
 		playerBall.rotate(7.5, 0, 0, 1);
-		//playerBall.rotate()
 		break;
 	}
 	case 's': {
-		//move back == +z
+		//Bewegung nach Sueden == +z
 		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.z = ballPos.z + 1 * ballSpeed;
 
 		ofVec3f wallPos = ballPos;
 		wallPos.z += playerSize / 2;
 
+		/*
+		 * Collision Detection
+		 */
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
 			if (this->tileGrid->checkSides(wallPos, playerSize/2, 0)) {
 				this->tileGrid->spawnLight(t, playerSize);
-				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
-
 				playerBoundingBox.setPosition(ballPos);
 				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
 			}
 		}
 		
-		//playerBall.rotate()
 		playerBall.rotate(7.5, 1, 0, 0);
 		break;
 	}
 	case 'd': {
-		//move right == +x
+		//Bewegung nach Osten == +x
 		ofVec3f ballPos = playerBoundingBox.getPosition();
 		ballPos.x = ballPos.x + 1 * ballSpeed;
 
 		ofVec3f wallPos = ballPos;
 		wallPos.x += playerSize / 2;
 
+		/*
+		 * Collision Detection
+		 */
 		tile* t = this->tileGrid->getTileAtVector(wallPos);
 		if (t != NULL && !t->getWalled()) {
 			if (this->tileGrid->checkSides(wallPos, 0, playerSize/2)) {
 				this->tileGrid->spawnLight(t, playerSize);
-				//std::cout << "X:" << t->getCoordinateX() << "-Y:" << t->getCoordinateY() << '\n';
-
 				playerBoundingBox.setPosition(ballPos);
 				movePlayerBall();
 				cameraFocus = this->getCameraFocus();
@@ -244,7 +204,6 @@ void ofApp::keyPressed(int key){
 		}
 		
 		playerBall.rotate(-7.5, 0, 0, 1);
-		//playerBall.rotate()
 		break;
 	}
 	case 'p': {
@@ -252,18 +211,14 @@ void ofApp::keyPressed(int key){
 		break;
 	}
 	default: {
-		//nothing
-
 	}
 	}
 }
 
-//--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
 	if (!paused) {
 		/*
@@ -271,7 +226,7 @@ void ofApp::mouseMoved(int x, int y ){
 		Man berechnet den Unterschied zwischen alten und neuen Koordinaten und multipliziert diesen dann mit der Sens.
 		Höhere Sens = Schnellere Kamera.
 		
-		Natürlich würde dabei noch Feinschliff fehlen.
+		Natürlich wuerde dabei noch Feinschliff fehlen.
 		*/
 		mousePosX = x;
 		mousePosY = y;
@@ -280,55 +235,40 @@ void ofApp::mouseMoved(int x, int y ){
 	}
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
 
 }
 
-//--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
 
-
-/**************************************************************/
-/**************CUSTOM METHODS**********/
-/**************************************************************/
-
 void ofApp::drawFPS() {
-
 	if (this->fpsfont.isLoaded() == false) {
-		//if (this->fpsfont.load(".\\resource\\fonts\\IMMORTAL.ttf", 10) == false) {
 		if (this->fpsfont.load("..\\resource\\fonts\\Immortal.ttf", 10) == false) {
 			return;
 		}
@@ -340,44 +280,33 @@ void ofApp::drawFPS() {
 	this->fpsfont.drawString(fpsStr, 20, 20);
 }
 
-void ofApp::printLabConsole(){
-
-}
-
 void ofApp::moveCamera(){
-	//Diese Vorgehensweise ist vermutlich nicht sonderlich effizient, aber sie funktioniert
-
+	/*
+	 * Kamera-Winkel & -Position anhand von Mausposition berechnen
+	 */
 	int windowW = ofGetWindowWidth();
 	int windowH = ofGetWindowHeight();
-	double pixelPerDegreeX = windowW / (double)360; //PASST
+	double pixelPerDegreeX = windowW / (double)360; 
 	double pixelPerDegreeY = windowH / (double)180;
-
-	cameraAngleX = mousePosX / pixelPerDegreeX; //PASST
+	cameraAngleX = mousePosX / pixelPerDegreeX; 
 	cameraAngleY = mousePosY / pixelPerDegreeY;
-
-	//int roundedCameraAngle = (int)cameraAngle;
 	float radiansOfDegreesX = cameraAngleX * 0.0174533;
 	float radiansOfDegreesY = cameraAngleY * 0.0174533;
-
-	double sinResult = sin(radiansOfDegreesX); //<- these functions expect radians and not degrees, i had to learn this the hard way
+	double sinResult = sin(radiansOfDegreesX); //Die folgenden Funktionen arbeiten mit Radianten, nicht mit Grad
 	double cosResult = cos(radiansOfDegreesX);
 
-	//cotinue here for possible Y position changes, for now left alone
-
+	/*
+	 * Kameraposition berechnet
+	 */
 	float camPosX = sinResult * cameraOffsetHori *-1;
-	//float camPosY = camera.getPosition().y;
 	float camPosY = playerBall.getPosition().y + cameraOffsetVerti;
 	float camPosZ = cosResult * cameraOffsetHori *-1;
 
-
-	//cout << "camPosX: " << camPosX /*<< " camPosY: " << camPosY */<< " camPosZ: " << camPosZ << "--- worked with: sinResult: " << sinResult << " cosResult: "<< cosResult << " and a cameraAngle of: " << cameraAngleX << endl;
-
 	camera.setPosition(camPosX, camPosY, camPosZ);
-	camera.lookAt(cameraFocus);
+	camera.lookAt(cameraFocus);		//Kamera soll den Ball ansehen
 }
 
 ofVec3f ofApp::getCameraFocus() {
-
 	ofVec3f cameraFocus = playerBoundingBox.getPosition();
 	cameraFocus.y += cameraOffsetVerti;
 

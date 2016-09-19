@@ -8,17 +8,16 @@ tileGrid::tileGrid(){
 }
 
 tileGrid::~tileGrid() {
-
-	/*for (int y = 0; y < this->gridSizeY; ++y) {
+	for (int y = 0; y < this->gridSizeY; ++y) {
 		if (this->grid[y] != nullptr) {
 			delete[] this->grid[y];
 		}
 	}
 
-	delete[] this->grid;*/
+	delete[] this->grid;
 }
 
-/*
+/* DEPRECATED
 *	The game grid represents a grid on a purely positive coordinate system as human beings would see it,
 *	with (0|0) being in the lower left corner.
 *
@@ -35,8 +34,6 @@ tileGrid::~tileGrid() {
 *		}
 *	}
 *		
-*	
-*
 int tileGrid::flipXfromGridToC(int gridPosX)
 {
 	float median = this->gridSizeX / (float)2;
@@ -79,17 +76,14 @@ void tileGrid::allocateMemory() {
 			this->grid[x][y] = new tile(gridPosX, gridPosY, this->tilesize, false, 0);
 		}
 	}
-
-	//test
-	/*std::cout << "grid x: " << this->getTileAt(0,0)->getGridPosX() << " grid y: " << this->getTileAt(0, 0)->getGridPosY()  << std::endl;
-	std::cout << "grid x: " << this->getTileAt(0, 33)->getGridPosX() << " grid y: " << this->getTileAt(0, 33)->getGridPosY() << std::endl;
-	std::cout << "grid x: " << this->getTileAt(52, 0)->getGridPosX() << " grid y: " << this->getTileAt(52, 0)->getGridPosY() << std::endl;
-	std::cout << "grid x: " << this->getTileAt(52, 33)->getGridPosX() << " grid y: " << this->getTileAt(52, 33)->getGridPosY() << std::endl;*/
 }
 
 void tileGrid::setupGround(){
 	for (int x = 0; x <= gridSizeX; x++) {
 		for (int y = 0; y <= gridSizeY; y++) {
+			/*
+			 * Zu zeichnendes Tile definieren
+			 */
 			ofBoxPrimitive box;
 			box.setPosition(y*tilesize, 0, -x*tilesize);
 			box.setHeight(1);
@@ -98,16 +92,9 @@ void tileGrid::setupGround(){
 			groundVec.push_back(box);
 		}
 	}
-	/*ofVec3f groundPosition(0,0,0);
-	this->ground.setPosition(groundPosition);
-	this->ground.setHeight(1);
-	this->ground.setWidth(this->gridSizeY * tilesize);
-	this->ground.setDepth(this->gridSizeY * tilesize);
-	this->ground.move(this->gridSizeY*this->tilesize / 2, 0, -this->gridSizeX*this->tilesize / 2);*/
 }
 
 void tileGrid::setupWalls(){
-
 	for (auto& wally : this->wallVec) {
 		if (wally.getWallLength() > 1) {
 			if (wally.isWallHoricontal()) {
@@ -190,7 +177,7 @@ void tileGrid::loadTextures(){
 	{
 		std::cerr << "whoops, _getcwd fucked up :x" << std::endl;
 	}
-	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
+	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
 
 	string cwd(cCurrentPath);
 
@@ -201,14 +188,9 @@ void tileGrid::loadTextures(){
 	this->wallImage.loadImage(wallTexturePath);
 	this->wallImage.getTextureReference().setTextureMinMagFilter(GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_FILTER);
 	this->wallImage.getTextureReference().setTextureWrap(GL_REPEAT, GL_REPEAT);
-	//this->wallImage.resize(240, 240);
-
-
 }
 
 void tileGrid::buildLab(){
-	//HARDCODE
-
 	this->buildWallAt(0, 0, 0, 3);
 	this->buildWallAt(0, 4, 0, 7);
 	this->buildWallAt(0, 8, 0, 11);
@@ -258,7 +240,7 @@ void tileGrid::buildLab(){
 	this->buildWallAt(8, 28, 8, 30);
 	this->buildWallAt(8, 31, 30, 31);
 	this->buildWallAt(28, 4, 28, 5);
-//
+
 	this->buildWallAt(28, 6, 34, 6);
 	this->buildWallAt(34, 1, 34, 5);
 	this->buildWallAt(34, 0, 52, 0);
@@ -320,14 +302,16 @@ void tileGrid::buildLab(){
 	this->buildWallAt(27, 27, 27, 27);
 	this->buildWallAt(19, 28, 27, 28);
 
-
 	this->setupWalls();
 }
 
 void tileGrid::addLights() {
 	//Light 1
-	lighttilesX[0] = 3.0f;
-	lighttilesY[0] = 3.5f;
+	lighttilesX[0] = 3.0f;	//X-Koordinate des Lichts, wenn es aktiviert wird
+	lighttilesY[0] = 3.5f;	//Y-Koordinate des Lichts, wenn es aktiviert wird
+	/*
+	 * Tiles, die das Licht aktivieren
+	 */
 	this->getTileAt(3, 3)->setLightStatus(1);
 	this->getTileAt(3, 4)->setLightStatus(1);
 	//Light 2
@@ -373,9 +357,7 @@ tile* tileGrid::getTileAt(int gridPosX, int gridPosY){
 	return returntile;
 }
 
-
-
-
+/* DEPRECATED */
 /*void tileGrid::generateHardGrid(){
 	this->grid = new tile*[this->gridSizeX];
 
@@ -383,14 +365,13 @@ tile* tileGrid::getTileAt(int gridPosX, int gridPosY){
 		this->grid[x] = new tile[gridSizeY];
 	}
 
-	//BEWARE: HARD CODE to set up first test labyrinth.
-
 	int x = 0; int y = 0;
 
 	
 }*/
 
-bool tileGrid::coordinateOutOfBounds(int gridPosX, int gridPosY) {
+/* DEPRECATED */
+/*bool tileGrid::coordinateOutOfBounds(int gridPosX, int gridPosY) {
 	if (gridPosX < 0 || gridPosY < 0) {
 		return true;
 	}
@@ -400,13 +381,11 @@ bool tileGrid::coordinateOutOfBounds(int gridPosX, int gridPosY) {
 	}
 
 	return false;
-}
+}*/
 
 void tileGrid::printGridToConsole(){
-
 	for (int x = 0; x < this->gridSizeX; ++x) {
 		for (int y = 0; y < this->gridSizeY; ++y) {
-			//if (this->getTileAt(x, y).getWalled()) {
 			if (this->grid[x][y]->getWalled()) {
 				std::cout << "#@";
 			}
@@ -431,8 +410,9 @@ tile* tileGrid::getTileAtVector(ofVec3f position){
 	int x = floor(position.x/tilesize);
 	int y = floor(position.z*-1 / tilesize);
 
-	//std::cout << x << '-' << y <<'\n';
-
+	/*
+	 * Ueberpruefe ob sich die Koordinaten ueberhaupt im Raster befinden
+	 */
 	if (x <= gridSizeY-1 && y <= gridSizeX-1)
 		return this->getTileAt(x, y);
 	else
@@ -440,10 +420,17 @@ tile* tileGrid::getTileAtVector(ofVec3f position){
 }
 
 bool tileGrid::checkSides(ofVec3f position, float x, float z) {
+	/*
+	 * Es ist immer nur x ODER z gesetzt(Groesse der Bounding-Box des Balls), der andere Wert ist 0
+	 * Ueberpruefung, ob bei position+x/+z eine Wand steht
+	 */
 	position.x += x;
 	position.z += z;
 	if (this->getTileAtVector(position)->getWalled())
 		return false;
+	/*
+	 * Ueberpruefung, ob bei position-x/-z eine Wand steht
+	 */
 	position.x -= 2 * x;
 	position.z -= 2 * z;
 	if (this->getTileAtVector(position)->getWalled())
@@ -452,41 +439,31 @@ bool tileGrid::checkSides(ofVec3f position, float x, float z) {
 }
 
 void tileGrid::draw(){
-	ofColor white(255, 255, 255); //white
-	//ofColor wall_color(0, 255, 0); //green
-
-	ofSetColor(white);
+	/*
+	 * Boden zeichnen
+	 */
 	this->groundImage.getTexture().bind();
 	for (auto &groundtile : groundVec) {
 		groundtile.draw();
 	}
 
-	//ofSetColor(wall_color);
+	/*
+	 * Mauern zeichnen
+	 */
 	this->wallImage.getTexture().bind();
 	for (auto& wall : this->visibleWallVec) {
 		wall.draw();
 	}
 
+	/*
+	 * Lichter aktivieren
+	 */
 	for (auto &light : lights) {
 		light.enable();
 	}
 }
 
 void tileGrid::buildWallAt(int startX, int startY, int endX, int endY){
-
-	/*if (startX != endX && startY != endY) {
-		return;
-	}*/
-
-	/*if (coordinateOutOfBounds(startX, startY)) {
-		std::cout << "start coordinates out of bounds: x:" << startX << " , y: " << startY << std::endl;
-		return;
-	}
-
-	if (coordinateOutOfBounds(endX, endY)) {
-		std::cout << "end coordinates out of bounds: x:" << endX << " , y: " << endY << std::endl;
-		return;
-	}*/
 
 	int xmod = 0;
 	int ymod = 0;
@@ -512,11 +489,16 @@ void tileGrid::buildWallAt(int startX, int startY, int endX, int endY){
 }
 
 void tileGrid::spawnLight(tile* cur, float playerSize) {
-	//cout << cur->getCoordinateX() << "-" << cur->getCoordinateY() << "-" << cur->getLightStatus() << '\n';
+	/*
+	 * Ueberpruefe ob ueberhaupt ein Licht aktiviert werden soll
+	 */
 	if (cur->getLightStatus() >0) {
 		int curStatus = cur->getLightStatus();
-		ofLight newLight;
 
+		/*
+		 * Neues Licht definieren
+		 */
+		ofLight newLight;
 		newLight.setPosition(ofVec3f(lighttilesX[curStatus-1]*tilesize, playerSize * 4, lighttilesY[curStatus-1]*tilesize*-1));
 		newLight.setDiffuseColor(ofColor(255.0f, 0.0f, 0.0f));
 		newLight.setSpecularColor(ofColor(255.0f, 0.0f, 0.0f));
@@ -526,8 +508,9 @@ void tileGrid::spawnLight(tile* cur, float playerSize) {
 
 		lights.push_back(newLight);
 
-		cout << "spawn light " << curStatus << "\n";
-
+		/*
+		 * Alle Tiles, die das Licht aktivieren wuerden, deaktivieren
+		 */
 		for (int x = 0; x < this->gridSizeX; ++x) {
 			for (int y = 0; y < this->gridSizeY; ++y) {
 				if (grid[x][y]->getLightStatus() == curStatus) {
@@ -535,25 +518,5 @@ void tileGrid::spawnLight(tile* cur, float playerSize) {
 				}
 			}
 		}
-		//std::cout << "Light spawned";
 	}
 }
-
-/*int tileGrid::cToEuklidX(int posX){
-
-}
-
-int tileGrid::cToEuklidY(int posY) {
-
-}
-
-int tileGrid::euklidToCX(int posX) {
-
-}
-
-int tileGrid::euklidToCY(int posY) {
-
-}
-
-int cCoordinateY = gridPosX;
-int cCoordinateX = this->gridSizeX - gridPosY - 1;*/

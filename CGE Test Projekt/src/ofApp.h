@@ -6,74 +6,63 @@
 
 /*
  * header-file des eigentlichen Spiels
- * zeichnet die Szene inkl. Kamera & Licht und intepretiert User-inputs
+ * Zeichnet die Szene inkl. Kamera & Licht und intepretiert User-inputs
+ * Bei dem Spiel handelt es sich um ein Labyrinth, das mit einem Ball durchquert wird. Das Labyrinth ist dunkel,
+ * die einzige Lichtquelle ist der Ball. An bestimmten Punkten, am richtigen Pfad zum Ziel, wird das Labyrinth rot ausgeleuchtet.
  * Andreas BRICHTA, Markus KOLLER
  */
 class ofApp : public ofBaseApp{
 
 	private:
-		
-		//FRAMERATE	
-		ofTrueTypeFont fpsfont;
+		ofTrueTypeFont fpsfont;	//Font fuer FPS-Anzeige
 
-		void drawFPS();
+		void drawFPS();			//Funktion fuer FPS-Anzeige
 
 		//GAME LOGIC
-		float ballSpeed = 4.0f;
-		bool paused = false;
-		float tilesize = 20;
-		tileGrid* tileGrid = nullptr;
+		float ballSpeed = 4.0f;			//Geschwindigkeit mit der sich der Ball bewegt
+		bool paused = false;			//Gibt an ob das Spiel pausiert ist	
+		float tilesize = 20;			//Groesse eines Tiles
+		tileGrid* tileGrid = nullptr;	//tileGrid
 
-		void printLabConsole();
+		ofSpherePrimitive playerBall;	//Kugel, die den Ball darstellt
+		ofImage boulderImage;			//Textur des Balls
 
-
-		//playerBallGroup* playerGroup = nullptr;
-		ofSpherePrimitive playerBall;
-		ofImage boulderImage;
-		//GLUquadricObj *quadric;
-
-		ofVec3f playerPosition;
+		ofVec3f playerPosition;			//(Start-)Position des Balls
 		
-		ofBoxPrimitive playerBoundingBox;
-		//ofBoxPrimitive testwall;
+		ofBoxPrimitive playerBoundingBox;	//BoundingBox des Balls
 
-		//GFX
-		//ofBoxPrimitive box;
-		//ofPlanePrimitive ground;
-
-		ofLight playerLight;
+		ofLight playerLight;			//Licht, das dem Ball folgt
 		
-		//CAMERA
-		ofCamera camera;
-		ofVec3f cameraFocus;
+		ofCamera camera;				//Kamera, die den Ball verfolgt
+		ofVec3f cameraFocus;			//Punkt, den die Kamera ansieht
 
-		double cameraAngleX = 180;
-		double cameraAngleY = 90;
-		int cameraOffsetHori = 30;
-		int cameraOffsetVerti = 10;
+		double cameraAngleX = 180;		//Kamerawinkel
+		double cameraAngleY = 90;		//Kamerawinkel
+		int cameraOffsetHori = 30;		//Horizontaler Abstand der Kamera zum Ball
+		int cameraOffsetVerti = 10;		//Vertikaler Abstand der Kamera zum Ball
 		
-		int mousePosX = 0;
-		int mousePosY = 0;
-		float camPosX = 0;
-		float camPosY = 0;
+		int mousePosX = 0;				//x-Wert der Mausposition im Fenster
+		int mousePosY = 0;				//y-Wert der Mausposition im Fenster
+		float camPosX = 0;				//x-Position der Kamera in 2D(tileGrid)
+		float camPosY = 0;				//x-Position der Kamera in 2D(tileGrid)
 
-		float playerSize = 20;
+		float playerSize = 20;			//Groesse des Balls
 		
-		ofVec3f getCameraFocus();
-		void moveCamera();
-		void movePlayerBall();
+		ofVec3f getCameraFocus();		//Liefert die Position, die die Kamera ansehen soll
+		void moveCamera();				//Bewegt die Kamera entsprechend der Mausbewegungen
+		void movePlayerBall();			//Bewegt den Ball
 
 	public:
-		ofApp();
-		~ofApp();
+		ofApp();										//Default-Konstruktor
+		~ofApp();										//Destruktor
 
-		void setup();
-		void update();
-		void draw();
+		void setup();									//Stellt Startbedingungen her
+		void update();									//Wird mit jedem Frame aufgerufen
+		void draw();									//Zeichnet ALLES
 
-		void keyPressed(int key);
+		void keyPressed(int key);						//Reagiert auf Tastatureingaben
 		void keyReleased(int key);
-		void mouseMoved(int x, int y );
+		void mouseMoved(int x, int y );					//Reagiert auf Mausbewegungen
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);

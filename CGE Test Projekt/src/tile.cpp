@@ -4,6 +4,10 @@ tile::tile(){
 
 }
 
+tile::~tile() {
+
+}
+
 tile::tile(int posX, int posY, float tilesize, bool walled=false, int lightStatus=-1){
 	this->gridPosX = posX;
 	this->gridPosY = posY;
@@ -18,6 +22,7 @@ void tile::positionAt(int posX, int posY){
 	this->gridPosX = posX;
 	this->gridPosY = posY;
 
+	//tilesize+tilesize/2, da die Position im Zentrum des Tiles sein soll
 	this->positionX = this->gridPosX * this->tilesize + this->tilesize / 2;
 	this->positionY = this->gridPosY * this->tilesize + this->tilesize / 2;
 }

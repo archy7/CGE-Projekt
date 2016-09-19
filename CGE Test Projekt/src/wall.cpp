@@ -13,16 +13,12 @@ wall::~wall(){
 
 ofVec3f wall::getPosition(float tilesize)
 {
-	//float posX = (this->endX - this->startX + 1) / 2;
-	//float posY = (this->endY - this->startY + 1) / 2;
 	float posX = (float)(this->startX + this->endX) / 2;
 	float posY = (float)(this->startY + this->endY) / 2;
 
-
-
-
 	ofVec3f wallPosition = ofVec3f(posX, 0, -posY);
 	wallPosition *= tilesize;
+	//x+tilesize/2, z-tilesize/2 damit die Mauer im Zentrum des Tiles steht
 	wallPosition += ofVec3f(tilesize / 2, 0, -tilesize / 2);
 	return wallPosition;
 }
@@ -42,7 +38,6 @@ int wall::getWallLength(){
 }
 
 bool wall::isWallHoricontal(){
-
 	return startY == endY ? true : false;
 }
 
